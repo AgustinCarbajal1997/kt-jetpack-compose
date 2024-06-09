@@ -6,12 +6,18 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -44,20 +50,41 @@ Los modificadores nos permiten moldear o personalizar los componentes
 @Preview(showBackground = true)
 @Composable
 fun Content() {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(Color.Red)
+        .padding(horizontal = 10.dp)
+        .wrapContentSize(Alignment.Center)
+    ) {
+        Texto("Hola")
+        Space()
+        Texto(texto = "Como estas?")
+        Space()
+        Texto(texto = "Chau")
+    }
+}
+
+@Composable
+fun Texto(texto: String){
     Text(
-        text = "Este es el contenido",
+        text = texto,
         color = Color.Red,
         fontWeight = FontWeight.Bold,
         fontSize = 40.sp,
         modifier = Modifier
             .background(Color.Black)
             .padding(horizontal = 30.dp, vertical = 5.dp)
+            .fillMaxWidth()
             .clickable {
                 println("Este es el contenido")
             }
     )
 }
 
+@Composable
+fun Space() {
+    Spacer(modifier = Modifier.height(5.dp))
+}
 
 @Composable // composable es un decorador que va a convertir una funcion en un component
 fun Greeting(phrase: String, modifier: Modifier = Modifier) {
