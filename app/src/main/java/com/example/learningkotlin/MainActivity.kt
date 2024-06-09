@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.runtime.* // esta es la que importa todo lo relacionado a get, sets, para manejo de estados
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,6 +26,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -64,13 +67,20 @@ val items =
         Color.DarkGray,
         Color.Blue
     )
+
+val nombre = "Me Gusta"
+
 @Preview(showBackground = true)
 @Composable
 fun Content() {
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(horizontal = 10.dp)
-        .wrapContentSize(Alignment.Center)
+    var likes by remember {
+        mutableStateOf(0)
+    }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 10.dp)
+            .wrapContentSize(Alignment.Center)
     ) {
         Texto("Hola")
         Space()
@@ -78,8 +88,9 @@ fun Content() {
         Space()
         Texto(texto = "Chau")
         Space()
-        Row(modifier = Modifier
-            .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             Circulo()
             Circulo()
@@ -90,25 +101,50 @@ fun Content() {
             modifier = Modifier
                 .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            items(items){ item ->
-                Box(modifier = Modifier
-                    .size(70.dp)
-                    .background(item, CircleShape))
+            items(items) { item ->
+                Box(
+                    modifier = Modifier
+                        .size(70.dp)
+                        .background(item, CircleShape)
+                )
                 Spacer(modifier = Modifier.width(10.dp))
             }
+        }
+        Space()
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(onClick = {
+                likes++
+            }) {
+                Text(text = nombre)
+            }
+            Spacer(modifier = Modifier.width(10.dp))
+            Resultado(likes = likes)
         }
     }
 }
 
+
 @Composable
-fun Circulo(){
-    Box(modifier = Modifier
-        .size(70.dp)
-        .background(Color.Green, CircleShape))
+fun Resultado(likes: Int) {
+    Text(text = likes.toString(), fontWeight = FontWeight.Bold, fontSize = 50.sp)
+}
+
+
+@Composable
+fun Circulo() {
+    Box(
+        modifier = Modifier
+            .size(70.dp)
+            .background(Color.Green, CircleShape)
+    )
 }
 
 @Composable
-fun Texto(texto: String){
+fun Texto(texto: String) {
     Text(
         text = texto,
         color = Color.Red,
