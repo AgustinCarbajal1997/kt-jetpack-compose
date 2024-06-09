@@ -6,13 +6,21 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -46,13 +54,21 @@ Los modificadores nos permiten moldear o personalizar los componentes
 - De escucha: Cuando se dispara un evento, por ejemplo onKeyEvent
 
 */
-
+val items =
+    listOf(
+        Color.Red,
+        Color.Yellow,
+        Color.Green,
+        Color.Black,
+        Color.Cyan,
+        Color.DarkGray,
+        Color.Blue
+    )
 @Preview(showBackground = true)
 @Composable
 fun Content() {
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(Color.Red)
         .padding(horizontal = 10.dp)
         .wrapContentSize(Alignment.Center)
     ) {
@@ -61,7 +77,34 @@ fun Content() {
         Texto(texto = "Como estas?")
         Space()
         Texto(texto = "Chau")
+        Space()
+        Row(modifier = Modifier
+            .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Circulo()
+            Circulo()
+            Circulo()
+            Circulo()
+        }
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            items(items){ item ->
+                Box(modifier = Modifier
+                    .size(70.dp)
+                    .background(item, CircleShape))
+                Spacer(modifier = Modifier.width(10.dp))
+            }
+        }
     }
+}
+
+@Composable
+fun Circulo(){
+    Box(modifier = Modifier
+        .size(70.dp)
+        .background(Color.Green, CircleShape))
 }
 
 @Composable
@@ -116,3 +159,4 @@ fun GreetingPreview() {
         Greeting("Hola Agustin")
     }
 }
+
